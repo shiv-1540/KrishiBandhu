@@ -1,0 +1,149 @@
+/* Container Styling */
+.container {
+    
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+    width: auto;
+  }
+  
+  /* Title Styling */
+  .title {
+    color: #2E8B57;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  /* Filters */
+  .filters {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .select-box {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .margin {
+    padding-top: 20px;
+    padding-right: 80px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    font-family: Arial, sans-serif;
+    margin-left: 50px;
+  }
+  
+  /* Loading Indicator */
+  .loading {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+  }
+  
+  /* Table Styling */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .dealer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .dealer-table th, .dealer-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .dealer-table th {
+    background-color: #2e8b57;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .dealer-table td {
+    background-color: #fff;
+  }
+  
+  .dealer-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .dealer-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* No Data Styling */
+  .no-data {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    padding: 20px;
+  }
+  @media (max-width: 768px){
+    .margin {
+      padding-top: 20px;
+      padding-right: 10px;
+      padding-bottom: 20px;
+      padding-left: 10px;
+      font-family: Arial, sans-serif;
+      margin-left: 14px;
+    }
+    .filters {
+      flex-direction: column; /* Stack filters vertically */
+      align-items: center;
+    }
+  
+    .select-box {
+      max-width: 100%; /* Full width for smaller screens */
+    }
+  
+    .dealer-table th, .dealer-table td {
+      font-size: 14px; /* Smaller font size for smaller screens */
+    }
+    .title {
+      color: #2E8B57;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 24px;
+  }
+  }
+  @media (max-width: 480px){
+    .margin {
+      padding-top: 20px;
+      padding-right: 10px;
+      padding-bottom: 20px;
+      padding-left: 0px;
+      font-family: Arial, sans-serif;
+      margin-left: 14px;
+    }
+    .filters {
+      gap: 10px; /* Reduce gap between filters */
+    }
+  
+    .dealer-table th, .dealer-table td {
+      font-size: 12px; /* Further reduce font size for very small screens */
+    }
+    .title {
+      color: #2E8B57;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 24px;
+  }
+  
+  }

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block pagetitle %}
+Plant Disease Detection
+{% endblock pagetitle %}
+{% block body %}
+
+<style>
+  body {
+    overflow-x: hidden;
+    background-color: #f3f4f6;
+    font-family: 'Poppins', sans-serif;
+  }
+  .container {
+    max-width: 1100px;
+    margin: auto;
+  }
+  .header-title {
+    color: #17612B;
+    font-weight: bold;
+    padding-top: 2%;
+  }
+  .lead {
+    color: #444;
+  }
+  .content-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  .upload-box {
+    text-align: center;
+  }
+  .custom-file input {
+    display: none;
+  }
+  .custom-file label {
+    background: #17612B;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .custom-file label:hover {
+    background: #144d22;
+  }
+  .btn-custom {
+    background: #17612B;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .btn-custom:hover {
+    background: #144d22;
+  }
+  ol {
+    padding-left: 20px;
+  }
+</style>
+
+<div class="container text-center">
+    <h1 class="header-title">🍁 Plant Disease Detection 🍁</h1>
+    <p class="lead">Upload a leaf image and let AI detect potential diseases.</p>
+</div>
+
+<div class="container row mt-4">
+    <div class="col-md-6">
+        <div class="content-box upload-box">
+            <img src="https://www.pngjoy.com/pngl/250/4840262_plants-png-indoors-tropical-plant-png-hd-png.png" height="150" class="mb-3">
+            <form action="/submit" method="POST" enctype="multipart/form-data">
+                <div class="custom-file">
+                    <input type="file" id="actual-btn" name="image" hidden />
+                    <label for="actual-btn">Choose File</label>
+                    <p id="file-chosen">No file chosen</p>
+                </div>
+                <button type="submit" class="btn-custom mt-3">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="content-box">
+            <h5><b>Prevent Plant Diseases by following these steps:</b></h5>
+            <ol>
+                <li>Maintain proper sanitation.</li>
+                <li>Use appropriate fertilizers.</li>
+                <li>Inspect plants before bringing them home.</li>
+                <li>Rotate crops to ensure healthy growth.</li>
+                <li>Provide good air circulation.</li>
+                <li>Remove diseased stems and leaves promptly.</li>
+            </ol>
+            <a href="https://www.thespruce.com/prevent-plant-diseases-in-your-garden-2539511" target="_blank" class="btn-custom">More Info</a>
+        </div>
+    </div>
+</div>
+
+<script>
+const actualBtn = document.getElementById('actual-btn');
+const fileChosen = document.getElementById('file-chosen');
+actualBtn.addEventListener('change', function () {
+    fileChosen.textContent = this.files[0].name;
+});
+</script>
+
+{% endblock body %}

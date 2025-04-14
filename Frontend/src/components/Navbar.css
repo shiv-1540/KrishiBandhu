@@ -1,0 +1,106 @@
+.navbar-container {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20%;
+    z-index: 1000;
+    background: #2e8b5600;
+}
+
+.toggle-button {
+    background: #2E8B57;
+    color: white;
+    font-size: 22px;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    text-align: left;
+    display: none; /* Hide toggle button by default */
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background: #317846;
+    color: white;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0px 10px;
+    transition: transform 0.3s ease;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.logo-container {
+   margin-left: 10px;
+    margin-bottom: 3px;
+    margin-top: 12px;
+}
+
+.logo {
+    text-decoration: none;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+
+    padding-top: 9px;
+    padding-bottom: 9px;
+   padding-left: 5px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    transition: 0.3s;
+    font-size: 16px;
+    width: 100%;
+}
+
+.link:hover {
+    background: #1B5E20;
+}
+.link span {
+    font-size: 21px; /* You can adjust this value if you want even larger emojis */
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+  }
+  
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .toggle-button {
+        display: block;
+        width: 37px;
+        margin-left: 331px;
+    }
+
+    .sidebar {
+        transform: translateX(-200%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        width: 48%;
+    }
+
+    .link {
+        justify-content: start;
+    }
+}

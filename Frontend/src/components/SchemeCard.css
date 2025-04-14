@@ -1,0 +1,103 @@
+.scheme-card {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.scheme-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tag {
+  display: inline-block;
+  background: #e0e0e0;
+  color: green;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin: 5px 3px;
+}
+
+/* Styling for the Apply Now button */
+.apply-now-btn {
+  display: inline-block;
+  background-color: #278342;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.apply-now-btn:hover {
+  background-color: #1e6b34;
+  transform: scale(1.05);
+}
+
+/* Add spacing between elements inside the card */
+.scheme-card h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.scheme-card p {
+  font-size: 0.9em;
+  color: #7f8c8d;
+  margin-bottom: 15px;
+}
+
+.scheme-card a {
+  margin-top: 10px;
+}
+
+.language-selector {
+  margin-top: 10px;
+}
+
+.language-selector label {
+  margin-right: 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.language-selector select {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.tts-controls {
+  margin-top: 10px;
+}
+
+.tts-controls button {
+  padding: 8px 12px;
+  margin-right: 10px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.tts-controls button:hover {
+  background-color: #2980b9;
+}
+
+.tts-controls button:last-child {
+  background-color: #e74c3c;
+}
+
+.tts-controls button:last-child:hover {
+  background-color: #c0392b;
+}

@@ -1,0 +1,490 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* General container styles */
+.lobby-container {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 50px auto;
+}
+
+/* Header styles */
+.lobby-container h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Form styles */
+.lobby-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lobby-container label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.lobby-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Button styles */
+.lobby-container button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.lobby-container button:hover {
+  background-color: #0056b3;
+}
+
+.floating-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #2e8b57;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.floating-button:hover {
+  background-color: #246b45;
+}
+
+.floating-coin {
+  position: fixed;
+  top: 30px;
+  right: 180px;
+  background: linear-gradient(135deg, #f4d03f, #f39c12); /* Gold gradient */
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.floating-coin i {
+  font-size: 20px; /* Icon size */
+}
+
+.floating-coin:hover {
+  background-color: #d4ac0d; /* Darker gold on hover */
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
+.floating-button i {
+  margin-right: 8px;
+}
+
+/* Expert advice container styles */
+.expert-advice-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header styles */
+.expert-advice-container h1 {
+  font-size: 2.5rem;
+  color: #2e8b57;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Experts grid styles */
+.experts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+/* Expert card styles */
+.expert-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the photo horizontally */
+  justify-content: center; /* Centers the content vertically */
+}
+
+.expert-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  border-color: #2e8b57;
+}
+
+/* Expert photo styles */
+.expert-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #2e8b57;
+}
+
+/* Expert card text styles */
+.expert-card h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2e8b57;
+  margin-bottom: 10px;
+}
+
+.expert-card p {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Join button styles */
+.expert-card button {
+  background-color: #2e8b57;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.expert-card button:hover {
+  background-color: #246b45;
+  transform: scale(1.1);
+}
+
+/* Auth container styles */
+.auth-container {
+  text-align: center;
+  margin-top: 50px;
+  padding: 30px;
+  background: linear-gradient(135deg, #ffffff, #e8f5e9);
+  border-radius: 15px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+}
+
+.auth-container h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Auth button styles */
+.auth-button {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: #2e8b57;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 10px;
+  width: 100%;
+}
+
+.auth-button:hover {
+  background-color: #246b45;
+  transform: scale(1.05);
+}
+
+/* User profile styling */
+.user-profile {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.user-profile h2 {
+  color: #2e8b57;
+  margin-bottom: 10px;
+}
+
+.user-profile p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.logout-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  background-color: #e04343;
+}
+
+/* Status indicator styles */
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-indicator.active {
+  background-color: #2e8b57;
+}
+
+.status-indicator.inactive {
+  background-color: #ff4d4d;
+}
+
+.icon-container {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #2e8b57;
+}
+
+.coin-balance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.coin-balance i {
+  margin-right: 10px;
+  color: #f39c12;
+}
+
+
+
+.coin-rate {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2e8b57; /* Green color for emphasis */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.coin-rate span {
+  font-size: 1.2rem;
+  color: #412a04; /* Gold color for the coin value */
+}
+
+.coin-rate i {
+  font-size: 1.5rem;
+  color: #f39c12; /* Gold color for the Bitcoin icon */
+}
+.coin-balance-top-left {
+  position: fixed;
+  top: 10px;
+  left: 218px;
+ 
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.coin-balance-top-left i {
+  font-size: 1.2rem;
+  color: #f39c12; 
+}
+.top-up-button {
+  position: fixed;
+  top: 10px;
+  left: 360px;
+ 
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.top-up-button:hover {
+  background-color: #9ee9c1;
+  transform: scale(1.05);
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+  .expert-advice-container {
+    padding: 10px;
+  }
+
+  .experts-grid {
+    grid-template-columns: 1fr; /* Single column layout for smaller screens */
+    gap: 15px;
+  }
+
+  .expert-card {
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  .expert-photo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+
+  .expert-card h3 {
+    font-size: 18px;
+  }
+
+  .expert-card p {
+    font-size: 12px;
+  }
+
+  .expert-card button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .coin-balance-top-left,
+  .top-up-button {
+    position: static;
+    margin: 10px auto;
+    display: block;
+    text-align: center;
+  }
+
+  .floating-button {
+    position: static;
+    margin: 10px auto;
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px;
+  }
+}
+
+/* Extra small devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .expert-advice-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .expert-card h3 {
+    font-size: 16px;
+  }
+
+  .expert-card p {
+    font-size: 10px;
+  }
+
+  .expert-card button {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+
+  .auth-container {
+    padding: 20px;
+  }
+
+  .auth-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

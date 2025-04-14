@@ -1,0 +1,48 @@
+nav {
+  background: #228B22;
+  padding: 10px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.app-container {
+  display: flex;
+}
+
+.content-container {
+  margin-left: 190px;
+  
+  width: 100%;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .toggle-button {
+    display: block;
+    width: 37px;
+    margin-left: 350px;
+}
+
+
+  .content-container {
+    margin-left: 0;
+  }
+}

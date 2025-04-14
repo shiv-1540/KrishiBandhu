@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block pagetitle %}
+{{title}}
+{% endblock pagetitle %}
+{% block body %}
+
+<style>
+  body {
+    background-color: #f4f8f2;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .container {
+    padding: 2rem;
+  }
+
+  .header-title {
+    font-weight: 600;
+    color: #1f4d27;
+  }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .btn-success {
+    background-color: #1f4d27;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 500;
+  }
+</style>
+
+<div class="container text-center">
+  <h1 class="display-4 header-title">{{title}} 🍂</h1>
+</div>
+
+<div class="container text-center">
+  <div class="card d-inline-block" style="width: 30%">
+    <img src={{image_url}} width="100%" height="auto" class="rounded">
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <h5><b>
+            {% if pred in [3,5,7,11,15,18,20,23,24,25,28,38] %}
+            Tips to Grow Healthy Plants :
+            {% else %}
+            Brief Description :
+            {% endif %}
+          </b></h5>
+        <p>{{desc}}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <h5><b>
+            {% if pred in [3,5,7,11,15,18,20,23,24,25,28,38] %}
+            Benefits :
+            {% else %}
+            Prevent This Plant Disease By Following These Steps :
+            {% endif %}
+          </b></h5>
+        <p>{{prevent}}</p>
+      </div>
+    </div>
+  </div>
+  {% if pred!=4 %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card text-center">
+        <h5><b>
+            {% if pred in [3,5,7,11,15,18,20,23,24,25,28,38] %}
+            Fertilizer :
+            {% else %}
+            Supplements :
+            {% endif %}
+          </b></h5>
+        <img src={{simage}} width="80%" height="auto" class="rounded mb-3">
+        <h6>{{sname}}</h6>
+        <a target="_blank" href={{buy_link}}>
+          <button type="button" class="btn btn-success">Buy Product</button>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock body %}

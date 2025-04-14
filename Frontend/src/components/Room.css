@@ -1,0 +1,432 @@
+.room-container1 {
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  display: flex;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  background-color: #c6c4c4;
+}
+
+@media (min-width: 768px) {
+  .room-container1 {
+    padding: 20px;
+    height: 100%;
+  }
+}
+
+/* Header Section */
+.room-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  
+}
+
+.room-header h1 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.room-header h4 {
+  font-size: 1.2rem;
+  color: #bbbbbb;
+  margin: 5px 0 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile-specific stream container */
+.stream-container {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  background-color: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 47vh;
+  margin: 10px 0;
+  flex-direction: column-reverse;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .stream-container {
+    width: 90%;
+    height: 46vh;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stream-container {
+    width: 70%;
+    height: 500px;
+  }
+}
+
+.stream h1 {
+  display: none;
+}
+
+.stream video,
+.react-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 10px;
+  border-radius: 28px;
+  border-color: white;
+}
+
+/* Mobile-specific my-stream */
+.my-stream {
+  position: absolute;
+  top: 10px; /* Changed from bottom to top */
+  right: 10px;
+  width: 80px; /* Slightly smaller */
+  height: 60px; /* Slightly smaller */
+  background-color: #000;
+  border: 2px solid #ffffff;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .my-stream {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 150px;
+    height: 300px;
+    border: 3px solid #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media (min-width: 1024px) {
+  .my-stream {
+    width: 175px;
+    height: 300px;
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+.my-stream video,
+.my-stream .react-player {
+  object-fit: cover;
+  height: 117px;
+  width: 175px;
+}
+
+/* Controls Section */
+.controls {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  position: relative;
+  bottom: auto;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+  .controls {
+    gap: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    /* position: absolute; */
+    bottom: 20px;
+    width: 90%;
+    max-width: 600px;
+  }
+}
+
+/* Circular Button Styles */
+.controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .controls button {
+    width: 60px;
+    height: 60px;
+    font-size: 22px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (min-width: 1024px) {
+  .controls button {
+    width: 70px;
+    height: 70px;
+    font-size: 24px;
+  }
+}
+
+/* Hover Effects */
+.controls button:hover {
+  background-color: #444444;
+  transform: scale(1.1);
+}
+
+/* Active Effects */
+.controls button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Mic Button */
+.controls .mic {
+  background: linear-gradient(135deg, #4caf50, #388e3c); /* Green */
+}
+
+.controls .mic:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Camera Button */
+.controls .video {
+  background: linear-gradient(135deg, #2196f3, #1976d2); /* Blue */
+}
+
+.controls .video:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* End Call Button */
+.controls .end-call {
+  background: linear-gradient(135deg, #e74c3c, #c0392b); /* Red */
+}
+
+.controls .end-call:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Send Stream Button */
+.send-stream-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #4caf50, #388e3c); /* Green */
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+}
+
+.send-stream-btn:hover {
+  background: linear-gradient(135deg, #388e3c, #2e7d32);
+  transform: scale(1.05);
+}
+
+.send-stream-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Call Button */
+.call-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #ff9800, #f57c00); /* Orange */
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+}
+
+.call-btn:hover {
+  background: linear-gradient(135deg, #f57c00, #e65100);
+  transform: scale(1.05);
+}
+
+.call-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* End Call Button */
+.end-call-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #e74c3c, #c0392b); /* Red */
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+}
+
+.end-call-btn:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: scale(1.05);
+}
+
+.end-call-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Send Stream Button */
+.send-strem {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #4caf50, #388e3c); /* Green gradient */
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+}
+
+.send-strem:hover {
+  background: linear-gradient(135deg, #388e3c, #2e7d32);
+  transform: scale(1.05);
+}
+
+.send-strem:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* CALL Button */
+.call {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #ff9800, #f57c00); /* Orange gradient */
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+}
+
+.call:hover {
+  background: linear-gradient(135deg, #f57c00, #e65100);
+  transform: scale(1.05);
+}
+
+.call:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Room header adjustments for mobile */
+.room-header h1 {
+  font-size: 1.5rem;
+}
+
+.room-header h4 {
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .room-header h1 {
+    font-size: 2rem;
+  }
+  
+  .room-header h4 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .room-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .room-header h4 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Button adjustments for mobile */
+.send-strem, .call {
+  padding: 8px 15px;
+  font-size: 14px;
+  margin: 5px;
+}
+
+@media (min-width: 768px) {
+  .send-strem, .call {
+    padding: 10px 18px;
+    font-size: 15px;
+    margin: 8px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .send-strem, .call {
+    padding: 12px 20px;
+    font-size: 16px;
+    margin: 10px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .stream-container {
+    height: 46vh;
+  }
+  
+  .controls {
+    position: relative;
+    margin-top: 5px;
+  }
+  
+  .room-header {
+    margin-bottom: 5px;
+  }
+}
