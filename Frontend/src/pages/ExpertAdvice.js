@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSocket } from "../context/SocketProvider";
-import Login from "../components/Login";
-import Signup from "../components/Signup";
+
+import { useUser } from "../context/UserContext";
 import "./ExpertAdvice.css";
 
 const ExpertAdvice = () => {
@@ -13,30 +13,11 @@ const ExpertAdvice = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  const [coins, setCoins] = useState(0); // State to store user's coin balance
+  const [user, setUser] = useUser(null); // State to store user
   const [loading, setLoading] = useState(true); // Loading state
   const socket = useSocket();
   const navigate = useNavigate();
 
-  // Fetch user's coin balance
-  const fetchUserCoins = async () => {
-    try {
-      const response = await fetch("https://krushi-backend-1.onrender.com/api/user/coins", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ userId: localStorage.getItem("userId") }),
-      });
-      const data = await response.json();
-      if (data.success) {
-        setCoins(data.coins);
-      }
-    } catch (error) {
-      console.error("Failed to fetch user coins:", error);
-    }
-  };
 
   // Fetch experts from the backend
   const fetchExperts = async () => {
@@ -57,7 +38,6 @@ const ExpertAdvice = () => {
     const fetchData = async () => {
       setLoading(true);
       await fetchExperts();
-      await fetchUserCoins();
       setLoading(false);
     };
 
@@ -68,16 +48,7 @@ const ExpertAdvice = () => {
     if (loggedIn === "true") setIsAuthenticated(true);
   }, []);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-    setShowLogin(false);
-  };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("isAuthenticated");
-    setIsAuthenticated(false);
-  };
 
   const handleSubmitForm = useCallback(
     (roomId) => {
@@ -153,7 +124,8 @@ const ExpertAdvice = () => {
             const data = await verifyResponse.json();
             if (data.success) {
               alert(`Coins added successfully! Your new balance is ${data.coins}`);
-              setCoins(data.coins); // Update coin balance in the UI
+              // setCoins(data.coins); // Update coin balance in the UI
+              
             } else {
               alert("Payment verification failed. Please contact support.");
             }
@@ -191,12 +163,6 @@ const ExpertAdvice = () => {
 
   return (
     <div className="expert-advice-container">
-      {!isAuthenticated && showLogin && (
-        <Login onLogin={handleLogin} onClose={() => setShowLogin(false)} />
-      )}
-      {!isAuthenticated && showSignup && (
-        <Signup onClose={() => setShowSignup(false)} />
-      )}
 
       {!isAuthenticated ? (
         <div className="auth-container">
@@ -214,7 +180,7 @@ const ExpertAdvice = () => {
 
           {/* Display user's coin balance */}
           <div className="coin-balance-top-left">
-            <i className="fa-brands fa-bitcoin"></i> Coins: {coins}
+            <i className="fa-brands fa-bitcoin"></i> Coins: {user.coins}
           </div>
 
           {/* Button to top up coins */}

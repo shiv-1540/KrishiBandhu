@@ -1,0 +1,13 @@
+  #land {
+    position: relative;
+    height: 100vh; /* Ensure it covers the full height of the viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../imgs/bgland.png'); /* Replace with your image path */
+    background-size: cover; /* Cover the entire area */
+    background-position: center; /* Center the image */
+
+    color: white; /* Change text color to white for better contrast */
+  }

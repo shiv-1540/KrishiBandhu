@@ -12,7 +12,7 @@ const Navbar = ({setIsOpen }) => {
           onClick={() => setIsOpen(false)}
         >
           <span className="text-2xl">🌿</span>
-          <span>कृषि-मित्र</span>
+          <span>कृषिबंधू</span>
         </Link>
       </div>
 

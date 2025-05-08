@@ -1,104 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Login from "../components/Login";
-import Signup from "../components/Signup";
-import { FaLeaf, FaTractor, FaStore, FaUserTie, FaShoppingCart, FaSignInAlt, FaUserPlus, FaSignOutAlt } from "react-icons/fa";
+import { FaLeaf, FaTractor, FaStore, FaUserTie, FaShoppingCart} from "react-icons/fa";
 import "./Ecommerce.css"; // Create this CSS file
 
 const Ecommerce = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isAuthenticated");
-    if (loggedIn === "true") setIsAuthenticated(true);
-    setIsLoading(false);
-  }, []);
-
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-    setShowLogin(false);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("isAuthenticated");
-    setIsAuthenticated(false);
-  };
-
-  if (isLoading) {
-    return (
-      <div className="loading-screen">
-        <div className="spinner"></div>
-        <p>Loading Krishi-Bandhu...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="py-1 ecommerce-container">
-      {/* Authentication Modals */}
-      {!isAuthenticated && showLogin && (
-        <Login 
-          onLogin={handleLogin} 
-          onClose={() => setShowLogin(false)} 
-          onSwitchToSignup={() => {
-            setShowLogin(false);
-            setShowSignup(true);
-          }}
-        />
-      )}
-      {!isAuthenticated && showSignup && (
-        <Signup 
-          onClose={() => setShowSignup(false)} 
-          onSwitchToLogin={() => {
-            setShowLogin(true);
-            setShowSignup(false);
-          }}
-        />
-      )}
-
-      {/* Main Content */}
-      {!isAuthenticated ? (
-        <div className="auth-container">
-          <div className="auth-header">
-            <FaLeaf className="logo-icon" />
-            <h2>Welcome to Krishi-Bandhu Marketplace</h2>
-            <p>Connect with farmers and businesses for sustainable agriculture</p>
-          </div>
-          <div className="auth-buttons">
-            <button 
-              onClick={() => setShowLogin(true)} 
-              className="auth-button login-button"
-            >
-              <FaSignInAlt /> Login
-            </button>
-            <button 
-              onClick={() => setShowSignup(true)} 
-              className="auth-button signup-button"
-            >
-              <FaUserPlus /> Sign Up
-            </button>
-          </div>
-          <div className="auth-features">
-            <div className="feature-item">
-              <FaTractor />
-              <span>Buy/Sell Farming Equipment</span>
-            </div>
-            <div className="feature-item">
-              <FaStore />
-              <span>Direct Market Access</span>
-            </div>
-            <div className="feature-item">
-              <FaUserTie />
-              <span>Business Partnerships</span>
-            </div>
-          </div>
-        </div>
-      ) : (
         <>
           <header className="hero-section">
             <div className="hero-content">
@@ -109,9 +19,6 @@ const Ecommerce = () => {
                 <Link to="/ecommerce" className="marketplace-button">
                   <FaShoppingCart /> Explore Marketplace
                 </Link>
-                <button onClick={handleLogout} className="logout-button1">
-                  <FaSignOutAlt /> Logout
-                </button>
               </div>
             </div>
           </header>
@@ -182,7 +89,6 @@ const Ecommerce = () => {
             </div>
           </section>
         </>
-      )}
     </div>
   );
 };

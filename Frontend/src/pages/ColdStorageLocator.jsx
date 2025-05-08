@@ -47,8 +47,8 @@ const ColdStorageLocator = () => {
   const [distanceFilter, setDistanceFilter] = useState(10);
   const [selectedStorage, setSelectedStorage] = useState(null);
   const mapRef = useRef();
-
-  const API_URL = "https://innoverse.avishkar.digital/api/cold-stores";
+// https://innoverse.avishkar.digital
+  const API_URL = "http://localhost:8000/api/cold-stores";
 
   useEffect(() => {
     fetchColdStorages();
@@ -59,7 +59,7 @@ const ColdStorageLocator = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get("http://localhost:8000/api/cold-stores");
       const data = Array.isArray(response.data) ? response.data : response.data.records || [];
       setStorages(data);
     } catch (error) {
@@ -82,12 +82,12 @@ const ColdStorageLocator = () => {
         (error) => {
           console.error("Error fetching location:", error);
           setError("Could not determine your location. Showing all cold storages.");
-          setUserLocation({ lat: 20.5937, lng: 78.9629 });
+          setUserLocation({ lat: 18.6783, lng: 73.8950 });
         }
       );
     } else {
       setError("Geolocation is not supported by your browser. Showing all cold storages.");
-      setUserLocation({ lat: 20.5937, lng: 78.9629 });
+      setUserLocation({ lat: 18.6783, lng: 73.8950 });
     }
   };
 

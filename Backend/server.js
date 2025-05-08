@@ -1,26 +1,22 @@
 const express = require("express");
 const app = express();
-const db = require("./db");
 const multer = require('multer');
 const path = require('path');
-const mongoose = require('mongoose');
 const cors = require("cors");
-// const Farmer = require("./models/Farmer");
 const User = require("./models/users.js");
-// const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-// const Shops = require("./models/shops.js");
-const Product = require("./models/product.js");
-// const shops = require("./models/shops.js");
 const YieldSell = require("./models/yieldsell.js")
-require('dotenv').config({ path: './config/.env' });
+const fs = require("fs");
+const coldStoresFilePath = path.join(__dirname, "ColdStore.json");
 
-// Load .env file
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8000;
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials:true,
+}));
+  
 app.use(express.json());
 app.use('/uploads', express.static('uploads')); // Serve static files
 
@@ -32,6 +28,44 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+// Helper function to load JSON data
+const loadJSONData = (filePath) => {
+    const data = fs.readFileSync(filePath);
+    return JSON.parse(data);
+};
+const dealersFilePath = path.join(__dirname, "dealers.json");
+
+
+app.get("/api/cold-stores", (req, res) => {
+    try {
+        const data = loadJSONData(coldStoresFilePath);
+        res.json(data);
+
+    } catch (error) {
+        res.status(500).json({ error: "Failed to load cold storage data" });
+        console.error(error);
+    }
+});
+
+
+app.get("/api/dealers", (req, res) => {
+    try {
+        let data = loadJSONData(dealersFilePath);
+        data.sort((a, b) =>
+            (a.State || "").localeCompare(b.State || "") ||
+            (a.City || "").localeCompare(b.City || "") ||
+            (a["Dealer Name"] || "").localeCompare(b["Dealer Name"] || "")
+        );
+
+        const uniqueStates = [...new Set(data.map((item) => item.State).filter(Boolean))];
+        res.json({ dealers: data, uniqueStates });
+
+    } catch (error) {
+        res.status(500).json({ error: "Failed to load dealer data" });
+        console.error(error);
+    }
+});
 
 
 // Farmer Signup (No Authentication)
@@ -150,140 +184,6 @@ app.post('/api/farmer/login', async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 });
-
-// app.post('/api/admin/viewshops', async (req, res) => {
-
-
-//     const { email, password } = req.body;
-
-//     // 🔥 Field Validation
-//     if (!email || !password) {
-//         return res.status(400).json({ message: 'Email and password are required' });
-//     }
-
-//     try {
-//         // 🔥 Check if the farmer exists
-//         const farmer = await User.findOne({ email, role: 'Farmer' });
-
-//         if (!farmer) {
-//             return res.status(404).json({ message: 'Farmer not found' });
-//         }
-
-//         // 🔥 Verify Password (Plain text comparison)
-//         if (farmer.password !== password) {
-//             return res.status(401).json({ message: 'Invalid credentials' });
-//         }
-
-//         // 🔥 Successful Login
-//         res.status(200).json({
-//             message: 'Login successful',
-//             farmer: {
-//                 user_id: farmer._id,
-//                 first_name: farmer.first_name,
-//                 last_name: farmer.last_name,
-//                 email: farmer.email,
-//                 role: farmer.role,
-//                 location: farmer.location
-//             }
-//         });
-
-//     } catch (error) {
-//         console.error('Error during farmer login:', error);
-//         res.status(500).json({ message: 'Internal server error', error: error.message });
-//     }
-// });
-
-// // Get all shops
-// app.get('/api/farmer/shops', async (req, res) => {
-//     try {
-//         try {
-//             const shops = await Shops.find({}, { _id: 1, shop_name: 1, image: 1 });
-//             res.status(200).json({ shops });
-//           } catch (error) {
-//             console.error("Error fetching shops from MongoDB:", error);
-//             throw error;
-//           }
-
-//     } catch (error) {
-//         console.error('Error fetching shops:', error.message);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// });
-
-// // Add a Product
-// app.post('/api/addproduct', upload.single('image'), async (req, res) => {
-//     const { name, price, quantity, category, priceUnit, quantityUnit, user_id, sellingQuantity } = req.body;
-
-//     const file_name = req.file.filename;
-//     const file_URL = path.join('/uploads/', file_name);
-
-//     try {
-//       const shop = await Shops.findOne({ user_id: user_id });
-
-//       if (!shop) {
-//         return res.status(404).json({ message: "Shop not found for the given user_id" });
-//       }
-
-//       const newProduct = new Product({
-//         shop_id: shop._id,
-//         name,
-//         price,
-//         quantity,
-//         category,
-//         price_unit: priceUnit,
-//         quantity_unit: quantityUnit,
-//         image: file_URL,
-//         selling_quantities: sellingQuantity
-//       });
-
-//       await newProduct.save();
-
-//       res.status(201).json({ message: "Product added successfully" });
-//     } catch (err) {
-//       res.status(400).json({ message: err.message });
-//     }
-//   });
-
-//   // Get all Products for a Shop by userID
-//   app.get('/api/products/:userID', async (req, res) => {
-//     const user_id = req.params.userID;
-
-//     try {
-//       const shop = await Shops.findOne({ user_id: user_id });
-
-//       if (!shop) {
-//         return res.status(404).json({ message: "Shop not found for the given user_id" });
-//       }
-
-//       const products = await Product.find({ shop_id: shop._id });
-
-//       res.status(200).json({ products: products });
-//     } catch (err) {
-//       res.status(400).json({ message: err.message });
-//     }
-//   });
-
-// // Get all products
-// app.get('/api/allproducts', async (req, res) => {
-//     try {
-//         const products = await Product.find();  // Fetch all products
-
-//         if (!products || products.length === 0) {
-//             return res.status(404).json({ message: "No products found" });
-//         }
-
-//         res.status(200).json({ 
-//             message: "Products retrieved successfully",
-//             products: products 
-//         });
-
-//     } catch (error) {
-//         console.error('Error fetching products:', error);
-//         res.status(500).json({ message: "Internal server error", error: error.message });
-//     }
-// });
-
-
 
 // Add Rent Product
 app.post('/api/farmer/addEqp', async (req, res) => {
