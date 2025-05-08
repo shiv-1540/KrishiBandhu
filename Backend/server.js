@@ -1,5 +1,5 @@
 const express = require("express");
-const app = require("./app");
+const app = express();
 const db = require("./db");
 const multer = require('multer');
 const path = require('path');
@@ -9,9 +9,9 @@ const cors = require("cors");
 const User = require("./models/users.js");
 // const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Shops = require("./models/shops.js");
+// const Shops = require("./models/shops.js");
 const Product = require("./models/product.js");
-const shops = require("./models/shops.js");
+// const shops = require("./models/shops.js");
 const YieldSell = require("./models/yieldsell.js")
 require('dotenv').config({ path: './config/.env' });
 
@@ -23,6 +23,8 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads')); // Serve static files
+
+
 // Multer setup for file uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, 'uploads/'),
