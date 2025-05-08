@@ -169,7 +169,7 @@ const App = () => {
     }
 
     return (
-        <div className="container1">
+        <div className="h-full container1">
             <Sidebar setMode={setMode} setBenefit={setBenefit} setDbt={setDbt} setResidence={setResidence} />
             <div className="content1">
                 <SearchBar setMode={setMode} setBenefit={setBenefit} setDbt={setDbt} setResidence={setResidence} />

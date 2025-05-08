@@ -1,315 +1,218 @@
-
 import React, { useState } from "react";
 import Weather, { getTodayWeather } from "./Weather";
-import HorizontalNav from "../components/HorizontalNav";
-
-
+import HorizontalNav from "../components/Farmer/Home/HorizontalNav";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { faCloud } from "@fortawesome/free-solid-svg-icons";
-import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
-import { faWarehouse } from "@fortawesome/free-solid-svg-icons";
-import { fontSize, height } from "@mui/system";
+import { 
+  faCartShopping, 
+  faCloud, 
+  faAddressBook, 
+  faWarehouse,
+  faTint,
+  faWind,
+  faCalendarAlt
+} from "@fortawesome/free-solid-svg-icons";
 import logo_main from "../imgs/logo_main.png";
 import farmerSuccess1 from "../imgs/farmer1.jpg";
 import farmerSuccess2 from "../imgs/farmer2.jpg";
 import farmerSuccess3 from "../imgs/farmer3.jpg";
 import farmerSuccess4 from "../imgs/farmer4.jpg";
+
 const StoryCard = ({ img, name, story }) => (
-  <div style={styles.storyCard}>
-    <img src={img} alt={name} style={styles.storyImage} />
-    <h3>{name}</h3>
-    <p>{story}</p>
+  <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <img 
+      src={img} 
+      alt={name} 
+      className="w-full h-48 object-cover"
+    />
+    <div className="p-6">
+      <h3 className="text-xl font-bold text-gray-800 mb-2">{name}</h3>
+      <p className="text-gray-600">{story}</p>
+    </div>
   </div>
 );
 
-
 const Home = () => { 
   const [hoveredIndex, setHoveredIndex] = useState(null);
-
-  const [hover, setHover] = useState(false);
   const [todayWeather, setTodayWeather] = useState(null);
-React.useEffect(() => {
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      const { latitude, longitude } = position.coords;
-      const data = await getTodayWeather(latitude, longitude, "99598ffc512d465521c1d8667c56d4cf");
-      setTodayWeather(data);
+
+  React.useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        const data = await getTodayWeather(latitude, longitude, "99598ffc512d465521c1d8667c56d4cf");
+        setTodayWeather(data);
+      },
+      (err) => console.error("Location access denied.")
+    );
+  }, []);
+
+  const features = [
+    { 
+      icon: faCloud, 
+      title: "Weather Forecast", 
+      desc: "Stay updated with real-time weather alerts and plan your crops accordingly.",
+      bgColor: "from-blue-50 to-blue-100"
     },
-    (err) => console.error("Location access denied.")
-  );
-}, []);
+    { 
+      icon: faCartShopping, 
+      title: "E-commerce Platform", 
+      desc: "Buy and sell agricultural products easily with our dedicated farmer marketplace.",
+      bgColor: "from-purple-50 to-purple-100"
+    },
+    { 
+      icon: faAddressBook, 
+      title: "Government Schemes", 
+      desc: "Get access to all the latest government schemes and subsidies for farmers.",
+      bgColor: "from-green-50 to-green-100"
+    },
+    { 
+      icon: faWarehouse, 
+      title: "Cold Storage Locator", 
+      desc: "Find nearby cold storage facilities to store your produce safely and bugs free.",
+      bgColor: "from-amber-50 to-amber-100"
+    }
+  ];
+
+  const successStories = [
+    { img: farmerSuccess1, name: "Ramesh Patel", story: "Using the weather forecast feature, Ramesh optimized his irrigation schedule and improved crop yield." },
+    { img: farmerSuccess2, name: "Sitaram Kadam", story: "Sitaram connected with buyers directly through our marketplace, getting fair prices for her organic produce." },
+    { img: farmerSuccess4, name: "Mohan Yadav", story: "Mohan availed government subsidies effortlessly, boosting his farm's efficiency." },
+    { img: farmerSuccess3, name: "Radha Tiwari", story: "Radha utilized our plant diseases prediction to save her crops from infestation." }
+  ];
+
   return (
-    
-    <div style={styles.container}>
+    <div className="pb-1">
       {/* Hero Section */}
-      <div style={styles.hero}>
-        <h1 style={styles.heading}>🌾 कृषिबंधू - Empowering Farmers with Technology</h1>
-        <p style={styles.subheading}>
+      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">🌾 कृषिबंधू - Empowering Farmers with Technology</h1>
+        <p className="text-xl md:text-2xl max-w-3xl mx-auto">
           A smart agriculture platform for farmers to make data-driven decisions and improve productivity.
         </p>
-        
-      </div>
-      <div>
-      <HorizontalNav />
-      </div>
-{/* Today's Weather Summary */}
-{todayWeather && (
-  <div style={{
-    display: "flex",
-    alignItems: "center",
-    gap: "20px",
-    padding: "15px 20px",
-    background: "#2f9d607a",
-    border: "1px solid #ccc",
-    borderRadius: "10px",
-    marginTop: "20px",
-    marginLeft:"10%",
-    marginRight:"10%",
-    marginBottom: "30px",
-    
-    
-    justifyContent: "center"
-  }}>
-    <img
-      src={`https://openweathermap.org/img/wn/${todayWeather.icon}.png`}
-      alt={todayWeather.weather}
-      style={{ width: "60px", height: "60px" }}
-    />
-    <div>
-      <h3 style={{ margin: 0 }}>{moment(todayWeather.date).format("dddd, MMM D")}</h3>
-      <p style={{ margin: 0 }}>🌡 {todayWeather.avgTemp}°C</p>
-      <p style={{ margin: 0 }}>💧 {todayWeather.avgHumidity}% | 💨 {todayWeather.avgWindSpeed} m/s</p>
-      <p style={{ margin: 0 }}>{todayWeather.weather}</p>
-    </div>
-  </div>
-)}
-      {/* Features Section */}
-      <div style={styles.features}>
-  <h2 style={styles.sectionTitle}>Key Features</h2>
-  <div style={styles.featureScroll}>
-    {[
-      { icon: faCloud, title: "Weather Forecast", desc: ["Stay updated with real-time weather alerts and plan your crops accordingly."] },
-      { icon: faCartShopping, title: "E-commerce for Farmers", desc: ["Buy and sell agricultural products easily with a dedicated farmer marketplace."] },
-      { icon: faAddressBook, title: "Government Schemes", desc: ["Get access to all the latest government schemes and subsidies for farmers."] },
-      { icon: faWarehouse, title: "Locate Cold Storages", desc: ["Find nearby cold storage facilities to store your produce safely and bugs free."] }
-    ].map((feature, index) => (
-      <div
-        key={index}
-        style={hoveredIndex === index ? { ...styles.featureCard, ...styles.featureCardHover } : styles.featureCard}
-        onMouseEnter={() => setHoveredIndex(index)}
-        onMouseLeave={() => setHoveredIndex(null)}
-      >
-        <div style={styles.featureCardIcon}>
-          <FontAwesomeIcon icon={feature.icon} />
+        <div className="mt-8 flex justify-center space-x-4">
+          <Link 
+            to="/news" 
+            className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300"
+          >
+            Latest News
+          </Link>
+          <Link 
+            to="/weather" 
+            className="bg-white hover:bg-gray-100 text-green-700 font-bold py-3 px-6 rounded-lg transition duration-300"
+          >
+            Weather Forecast
+          </Link>
         </div>
-        <b><h3>{feature.title}</h3></b>
-        {feature.desc.map((line, i) => <p key={i}>{line}</p>)}
-      </div>
-    ))}
-  </div>
-</div>
-
-
-      {/* Success Stories & Testimonials Section */}
-      <div style={styles.successStories}>
-        <h2 style={styles.sectionTitle}>Success Stories of Our Farmers</h2>
-        <div style={styles.storyGrid}>
-          <StoryCard img={farmerSuccess1} name="Ramesh Patel" story="Using the weather forecast feature, Ramesh optimized his irrigation schedule and improved crop yield." />
-          <StoryCard img={farmerSuccess2} name="Sitaram Kadam" story="Sitaram connected with buyers directly through our marketplace, getting fair prices for her organic produce." />
-          <StoryCard img={farmerSuccess4} name="Mohan Yadav" story="Mohan availed government subsidies effortlessly, boosting his farm’s efficiency." />
-          <StoryCard img={farmerSuccess3} name="Radha Tiwari" story="Radha utilized our plant diseases prediction to save her crops from infestation." />
-          
-           </div>
-           <br></br>
-           
-           <div style={styles.storyGrid}>
-          <StoryCard img={farmerSuccess1} name="Ramesh Patel" story="Using the weather forecast feature, Ramesh optimized his irrigation schedule and improved crop yield." />
-          <StoryCard img={farmerSuccess2} name="Sitaram Kadam" story="Sitaram connected with buyers directly through our marketplace, getting fair prices for her organic produce." />
-          <StoryCard img={farmerSuccess4} name="Mohan Yadav" story="Mohan availed government subsidies effortlessly, boosting his farm’s efficiency." />
-          <StoryCard img={farmerSuccess3} name="Radha Tiwari" story="Radha utilized our plant diseases prediction to save her crops from infestation." />
-          
-           </div>
-           
       </div>
 
-      {/* Call to Action Section */}
-      <div style={styles.ctaSection}>
-        <h2>Join the Future of Farming</h2>
-        <p>Leverage the power of technology to maximize your agricultural success.</p>
-        <Link to="/news" style={styles.ctaButton}>📢 Explore Latest News</Link>
-      </div>
+      <div className="container mx-auto px-4">
+        <HorizontalNav />
 
-      {/* Footer Section */}
-      <footer style={styles.footer}>
-        <p>© 2025 कृषिबंधू. All rights reserved.</p>
-        <div style={styles.footerLinks}>
-          <Link to="/ask-question" style={styles.footerLink}>Ask a Question</Link>
-          <Link to="/contact-us" style={styles.footerLink}>Contact Us</Link>
+        {/* Today's Weather Summary */}
+        {todayWeather && (
+          <div className="bg-white rounded-xl shadow-md p-6 my-8 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6">
+            <div className="flex items-center gap-4">
+              <img
+                src={`https://openweathermap.org/img/wn/${todayWeather.icon}@2x.png`}
+                alt={todayWeather.weather}
+                className="w-20 h-20"
+              />
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800">
+                  {moment(todayWeather.date).format("dddd, MMMM D")}
+                </h3>
+                <p className="text-gray-600">{todayWeather.weather}</p>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
+              <div className="bg-blue-50 p-3 rounded-lg flex items-center gap-2">
+                <FontAwesomeIcon icon={faTint} className="text-blue-500 text-xl" />
+                <div>
+                  <p className="text-sm text-gray-500">Humidity</p>
+                  <p className="font-bold">{todayWeather.avgHumidity}%</p>
+                </div>
+              </div>
+              
+              <div className="bg-green-50 p-3 rounded-lg flex items-center gap-2">
+                <FontAwesomeIcon icon={faWind} className="text-green-500 text-xl" />
+                <div>
+                  <p className="text-sm text-gray-500">Wind</p>
+                  <p className="font-bold">{todayWeather.avgWindSpeed} m/s</p>
+                </div>
+              </div>
+              
+              <div className="bg-amber-50 p-3 rounded-lg flex items-center gap-2">
+                <FontAwesomeIcon icon={faCalendarAlt} className="text-amber-500 text-xl" />
+                <div>
+                  <p className="text-sm text-gray-500">Temperature</p>
+                  <p className="font-bold">{todayWeather.avgTemp}°C</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Features Section */}
+        <section className="my-16">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Key Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className={`bg-gradient-to-br ${feature.bgColor} rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full flex flex-col`}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                <div className="text-4xl mb-4 text-green-600 flex justify-center">
+                  <FontAwesomeIcon icon={feature.icon} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">{feature.title}</h3>
+                <p className="text-gray-600 text-center flex-grow">{feature.desc}</p>
+                {hoveredIndex === index && (
+                  <div className="mt-4 text-center">
+                    <Link 
+                      to={feature.title === "Weather Forecast" ? "/weather" : 
+                          feature.title === "E-commerce Platform" ? "/ecommerce" :
+                          feature.title === "Government Schemes" ? "/schemes" : "/cold-storages"}
+                      className="inline-block bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm transition duration-300"
+                    >
+                      Learn More
+                    </Link>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Success Stories Section */}
+        <section className="my-16">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Success Stories</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {successStories.map((story, index) => (
+              <StoryCard key={index} {...story} />
+            ))}
+          </div>
+        </section>
+
+        {/* Call to Action Section */}
+        <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-md shadow-lg p-6 my-16 mb-8 text-center text-white">
+          <h2 className="text-3xl font-bold mb-4">Join the Future of Farming</h2>
+          <p className="text-xl mb-6 max-w-2xl mx-auto">
+            Leverage the power of technology to maximize your agricultural success.
+          </p>
+          <Link 
+            to="/register" 
+            className="inline-block bg-white text-green-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg text-lg transition duration-300 shadow-md"
+          >
+            Get Started Today
+          </Link>
         </div>
-      </footer>
+      </div>
     </div>
   );
-};
-
-// ✅ Styling for a Beautiful UI
-const styles = {
-  container: {
-    textAlign: "center",
-    fontFamily: "Arial, sans-serif",
-    backgroundColor: "#f4f4f4",
-    minHeight: "100vh",
-    paddingBottom: "40px",
-    backgroundImage: "url('/image.png')", // Add the background image
-    backgroundSize: "cover", // Cover the entire container
-    backgroundPosition: "center", // Center the image
-  },
-  
-  featureScroll: {
-    display: "flex",
-    flexDirection: "row",
-    overflowX: "auto",
-    gap: "20px",
-    padding: "10px",
-    scrollSnapType: "x mandatory",
-    WebkitOverflowScrolling: "touch",
-  },
-  
-  hero: {
-    background: "linear-gradient(to right, #2E8B57, #1B5E20)",
-    color: "white",
-    padding: "50px 20px",
-  },
-  heading: {
-    fontSize: "28px",
-    fontWeight: "bold",
-  },
-  h3:{
-fontSize:"35px"
-  },
-  subheading: {
-    fontSize: "18px",
-    marginTop: "10px",
-  },
-  buttonContainer: {
-    marginTop: "20px",
-  },
-  button: {
-    display: "inline-block",
-    background: "#FFA726",
-    color: "white",
-    padding: "12px 20px",
-    borderRadius: "5px",
-    textDecoration: "none",
-    fontWeight: "bold",
-    margin: "5px",
-    transition: "0.3s",
-  },
-  buttonHover: {
-    background: "#EF6C00",
-  },
-  features: {
-    padding: "40px 20px",
-  },
-  sectionTitle: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    marginBottom: "20px",
-  },
-  featureGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "30px",
-    height:"400px",
-    justifyContent: "center",
-  },
-  featureCardIcon: {
-    fontSize: "60px",
-    color: "#1B5E20",
-  },
-  featureCard: {
-    minWidth: "250px", // for horizontal scroll
-    scrollSnapAlign: "start",
-    padding: "20px",
-    borderRadius: "12px",
-    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)", // Subtle shadow
-    border: "2px solid rgb(164, 164, 164)",
-    height: "350px",
-    background: "#f4f4f4",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    overflow: "hidden",
-    transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out", // Smooth animation
-  },
-  featureCardHover: {
-    transform: "scale(1.03)", // Enlarges on hover
-    boxShadow: "5px 15px 30px rgba(0, 0, 0, 0.4)", // Stronger shadow
-    cursor: "pointer", // Pointer cursor
-  },
-  
-  iconStyle: {
-    fontSize: "2.5rem", // Slightly smaller to balance
-    color: "#2f9d60",
-    marginBottom: "10px",
-  },
-  title: {
-    fontSize: "1.2rem",
-    fontWeight: "bold",
-    marginBottom: "10px", // Added margin
-  },
-  description: {
-    fontSize: "0.9rem",
-    color: "#333",
-    padding: "0 15px",
-    lineHeight: "1.4", // Proper text spacing
-    overflow: "hidden",
-  },
-  ctaSection: {
-    background: "#2f9d607a",
-    color: "white",
-    padding: "40px 20px",
-    borderRadius: "10px",
-    margin: "20px auto",
-    width: "80%",
-    marginTop:"20%",
-  },
-  ctaButton: {
-    display: "inline-block",
-    background: "#FFA726",
-    color: "white",
-    padding: "12px 20px",
-    borderRadius: "5px",
-    textDecoration: "none",
-    fontWeight: "bold",
-    marginTop: "10px",
-  },
-  footer: {
-    background: "#5f786a00",
-    color: "white",
-    padding: "20px",
-    textAlign: "center",
-    marginTop: "40px",
-  },
-  footerLinks: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "20px",
-    marginTop: "10px",
-  },
-  footerLink: {
-    color: "white",
-    textDecoration: "none",
-    fontWeight: "bold",
-  },
-  successStories: { padding: "40px 20px",},
-  storyGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px" },
-  storyCard: { padding: "20px", borderRadius: "10px", background: "#fff", boxShadow: "0px 4px 8px rgba(0,0,0,0.2)", textAlign: "center" },
-  storyImage: { width: "100%", height: "150px", objectFit: "cover", borderRadius: "10px" },
-  
 };
 
 export default Home;

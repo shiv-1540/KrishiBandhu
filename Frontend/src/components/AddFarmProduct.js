@@ -8,7 +8,7 @@ const AddFarmProduct = () => {
     farmerName: "",
     contact: "",
     location: "",
-    image: null, // Store file object
+    image: null,
   });
 
   const handleChange = (e) => {

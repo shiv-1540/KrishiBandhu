@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
+
+// Importing the Pages
 import Home from "./pages/Home";
 import Weather from "./pages/Weather";
 import Schemes from "./pages/Schemes";
@@ -11,7 +12,6 @@ import News from "./pages/News";
 import LoanPage from "./pages/LoanPage";
 import YieldSellForm from "./pages/AddYield";
 import ColdStorageLocator from "./pages/ColdStorageLocator";
-import "./App.css"; // Import the CSS file
 import LearningHub from "./pages/LearningHub";
 import FarmerTools from "./pages/FarmerTools"; // ✅ Import Farmer Tools Page
 import FarmerToBusiness from "./pages/FarmerToBusiness"; // ✅ Import Farmer to Business Page
@@ -23,40 +23,35 @@ import { SocketProvider } from "./context/SocketProvider"; // ✅ Import SocketP
 import RoomPage from "./components/Room";
 import CropRecom from "./pages/CropRecom"; // ✅ Import Crop Recommendation Page
 import AllUsers from "./pages/allUsers";
+import UserDashboard from "./components/Dashboard/UserDashboard";
 
 
 function App() {
   return (
     <SocketProvider>
       <Router>
-        <div className="app-container">
-          <Navbar />
-          <div className="content-container">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/weather" element={<Weather />} />
-              <Route path="/schemes" element={<Schemes />} />
-              <Route path="/ecommerce" element={<Ecommerce />} />
-              <Route path="/market-price" element={<MarketPrice />} />
-              <Route path="/FertilizerDealer" element={<FertilizerDealer />} />
-              <Route path="/news" element={<News />} />
-              <Route path="/loans" element={<LoanPage />} />
-              <Route path="/YieldSellForm" element={<YieldSellForm />} />
-              <Route path="/cold-storages" element={<ColdStorageLocator />} />
-              <Route path="/learning-hub" element={<LearningHub />} />
-              <Route path="/farmer-tools" element={<FarmerTools />} />
-              <Route path="/farmer-to-business" element={<FarmerToBusiness />} />
-              <Route path="/business-to-farmer" element={<BusinessToFarmer />} />
-              <Route path="/crop-disease" element={<CropDisease />} />
-              <Route path="/expert-advice/*" element={<ExpertAdvice />} /> {/* ✅ Updated Expert Advice */}
-              <Route path="/expert" element={<Expert/>} /> {/* ✅ Lobby Screen */}
-              <Route path="/room/:roomId" element={<RoomPage />} />
-              <Route path="/crop-recommendation" element={<CropRecom />} /> {/* ✅ Crop Recommendation Page */}
-              <Route path="/all-users" element={<AllUsers />} /> {/* ✅ All Users Page */}
-
-            </Routes>
-          </div>
-        </div>
+        <Routes>
+          <Route path="/" element={<UserDashboard><Home /></UserDashboard>} />
+          <Route path="/weather" element={<UserDashboard><Weather /></UserDashboard>} />
+          <Route path="/schemes" element={<UserDashboard><Schemes /></UserDashboard>} />
+          <Route path="/ecommerce" element={<UserDashboard><Ecommerce /></UserDashboard>} />
+          <Route path="/market-price" element={<UserDashboard><MarketPrice /></UserDashboard>} />
+          <Route path="/FertilizerDealer" element={<UserDashboard><FertilizerDealer /></UserDashboard>} />
+          <Route path="/news" element={<UserDashboard><News /></UserDashboard>} />
+          <Route path="/loans" element={<UserDashboard><LoanPage /></UserDashboard>} />
+          <Route path="/YieldSellForm" element={<UserDashboard><YieldSellForm /></UserDashboard>} />
+          <Route path="/cold-storages" element={<UserDashboard><ColdStorageLocator /></UserDashboard>} />
+          <Route path="/learning-hub" element={<UserDashboard><LearningHub /></UserDashboard>} />
+          <Route path="/farmer-tools" element={<UserDashboard><FarmerTools /></UserDashboard>} />
+          <Route path="/farmer-to-business" element={<UserDashboard><FarmerToBusiness /></UserDashboard>} />
+          <Route path="/business-to-farmer" element={<UserDashboard><BusinessToFarmer /></UserDashboard>} />
+          <Route path="/crop-disease" element={<UserDashboard><CropDisease /></UserDashboard>} />
+          <Route path="/expert-advice/*" element={<UserDashboard><ExpertAdvice /></UserDashboard>} /> 
+          <Route path="/expert" element={<UserDashboard><Expert/></UserDashboard>} /> 
+          <Route path="/room/:roomId" element={<UserDashboard><RoomPage /></UserDashboard>} />
+          <Route path="/crop-recommendation" element={<UserDashboard><CropRecom /></UserDashboard>} /> 
+          <Route path="/all-users" element={<UserDashboard><AllUsers /></UserDashboard>} />
+        </Routes>
       </Router>
     </SocketProvider>
   );

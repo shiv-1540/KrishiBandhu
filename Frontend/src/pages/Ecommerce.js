@@ -39,7 +39,7 @@ const Ecommerce = () => {
   }
 
   return (
-    <div className="ecommerce-container">
+    <div className="py-1 ecommerce-container">
       {/* Authentication Modals */}
       {!isAuthenticated && showLogin && (
         <Login 

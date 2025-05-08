@@ -21,7 +21,6 @@ const weatherIcons = {
   default: "/weather-icons/default.png"
 };
 
-// Move processForecast outside the component
 const processForecast = (list) => {
   const dailyData = {};
 
@@ -68,7 +67,6 @@ const processForecast = (list) => {
   }));
 };
 
-// Also move getWeatherImage outside since processForecast uses it
 const getWeatherImage = (weatherCondition) => {
   const condition = weatherCondition.toLowerCase();
   if (condition.includes("clear")) return weatherIcons.sunny;
@@ -78,6 +76,29 @@ const getWeatherImage = (weatherCondition) => {
   if (condition.includes("cloud")) return weatherIcons.cloudy;
   if (condition.includes("mist") || condition.includes("fog")) return weatherIcons.mist;
   return weatherIcons.default;
+};
+
+const getFarmingTip = (weatherCondition) => {
+  const condition = weatherCondition.toLowerCase();
+  if (condition.includes("rain")) {
+    return "Ideal conditions for planting. Avoid applying fertilizers or pesticides as rain may wash them away. Good time for rice transplantation.";
+  }
+  if (condition.includes("clear")) {
+    return "Perfect weather for harvesting and drying crops. Irrigate fields in the early morning or late evening to reduce water loss through evaporation.";
+  }
+  if (condition.includes("cloud")) {
+    return "Good day for most farming activities. Moderate temperatures reduce stress on crops and livestock.";
+  }
+  if (condition.includes("thunder")) {
+    return "Postpone field work due to lightning risk. Secure farm equipment and protect sensitive crops. Check drainage systems.";
+  }
+  if (condition.includes("snow")) {
+    return "Protect winter crops with covers. Store harvested produce properly. Avoid working in fields during extreme cold.";
+  }
+  if (condition.includes("mist") || condition.includes("fog")) {
+    return "High humidity increases disease risk. Monitor crops for fungal infections. Delay spraying until visibility improves.";
+  }
+  return "Monitor weather regularly to plan farming activities. Check soil moisture before irrigation.";
 };
 
 const Weather = () => {
@@ -126,57 +147,60 @@ const Weather = () => {
 
   if (loading) {
     return (
-      <div style={styles.loadingContainer}>
-        <div style={styles.loadingSpinner}></div>
-        <p>Fetching weather data...</p>
+      <div className="flex flex-col items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500 mb-4"></div>
+        <p className="text-gray-600">Fetching weather data...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div style={styles.errorContainer}>
-        <p style={styles.errorText}>{error}</p>
+      <div className="bg-red-50 p-4 rounded-lg text-center">
+        <p className="text-red-600">{error}</p>
       </div>
     );
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h1 style={styles.title}>Farm Weather Forecast</h1>
-        <p style={styles.subtitle}>Plan your farming activities with accurate weather predictions</p>
+    <div className="max-w-6xl mx-auto p-4 md:p-6 bg-white rounded-xl shadow-md">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-green-700 mb-2">Farm Weather Forecast</h1>
+        <p className="text-gray-600">Plan your farming activities with accurate weather predictions</p>
       </div>
 
-      <div style={styles.forecastContainer}>
+      {/* 5-Day Forecast */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
         {forecast.map((day, index) => (
           <div
             key={index}
-            style={{
-              ...styles.dayCard,
-              ...(selectedDay === day.date ? styles.selectedDayCard : {}),
-            }}
+            className={`bg-white rounded-lg p-4 text-center cursor-pointer transition-all duration-200 border-2 ${
+              selectedDay === day.date 
+                ? "border-green-500 shadow-lg transform -translate-y-1 bg-green-50" 
+                : "border-gray-100 hover:border-green-300"
+            }`}
             onClick={() => handleDayClick(day)}
           >
-            <h3 style={styles.dayTitle}>{day.dateReadable}</h3>
-            <div style={styles.weatherImageContainer}>
+            <h3 className="font-medium text-gray-800">{day.dateReadable}</h3>
+            <div className="h-16 my-3 flex items-center justify-center">
               <img 
                 src={day.weatherImage} 
                 alt={day.description} 
-                style={styles.weatherImage}
+                className="h-full w-auto object-contain"
               />
             </div>
-            <div style={styles.tempContainer}>
-              <span style={styles.maxTemp}>{day.maxTemp}°</span>
-              <span style={styles.minTemp}>/{day.minTemp}°</span>
+            <div className="flex justify-center items-baseline space-x-1">
+              <span className="text-xl font-bold text-red-500">{day.maxTemp}°</span>
+              <span className="text-sm text-blue-500">/{day.minTemp}°</span>
             </div>
-            <div style={styles.weatherDetails}>
-              <div style={styles.detailItem}>
-                <FontAwesomeIcon icon={faTint} style={styles.detailIcon} />
+            <div className="flex justify-between mt-3 text-xs text-gray-600">
+              <div className="flex items-center">
+                <FontAwesomeIcon icon={faTint} className="text-green-600 mr-1" />
                 <span>{day.avgHumidity}%</span>
               </div>
-              <div style={styles.detailItem}>
-                <FontAwesomeIcon icon={faWind} style={styles.detailIcon} />
+              <div className="flex items-center">
+                <FontAwesomeIcon icon={faWind} className="text-green-600 mr-1" />
                 <span>{day.avgWindSpeed} m/s</span>
               </div>
             </div>
@@ -184,32 +208,37 @@ const Weather = () => {
         ))}
       </div>
 
+      {/* Hourly Forecast */}
       {selectedDay && (
-        <div style={styles.hourlyContainer}>
-          <div style={styles.hourlyHeader}>
-            <h2 style={styles.hourlyTitle}>Hourly Forecast</h2>
-            <p style={styles.selectedDate}>{moment(selectedDay).format("dddd, MMMM D")}</p>
+        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-semibold text-gray-800">Hourly Forecast</h2>
+            <p className="text-gray-500">
+              {moment(selectedDay).format("dddd, MMMM D")}
+            </p>
           </div>
-          <div style={styles.hourlyForecast}>
+          <div className="flex overflow-x-auto pb-2 -mx-2 scrollbar-hide">
             {hourlyData.map((hour, index) => (
-              <div key={index} style={styles.hourCard}>
-                <p style={styles.hourTime}>{hour.time}</p>
-                <div style={styles.hourWeatherImage}>
-                  <img 
-                    src={hour.weatherImage} 
-                    alt={hour.weather[0].description} 
-                    style={styles.weatherIcon}
-                  />
-                </div>
-                <p style={styles.hourTemp}>{hour.main.temp}°</p>
-                <div style={styles.hourDetails}>
-                  <div style={styles.hourDetailItem}>
-                    <FontAwesomeIcon icon={faTint} size="xs" style={styles.hourDetailIcon} />
-                    <span>{hour.main.humidity}%</span>
+              <div key={index} className="flex-shrink-0 px-2">
+                <div className="bg-gray-50 rounded-lg p-3 w-24 text-center">
+                  <p className="font-medium text-gray-700">{hour.time}</p>
+                  <div className="h-12 my-2 flex items-center justify-center">
+                    <img 
+                      src={hour.weatherImage} 
+                      alt={hour.weather[0].description} 
+                      className="h-full w-auto"
+                    />
                   </div>
-                  <div style={styles.hourDetailItem}>
-                    <FontAwesomeIcon icon={faWind} size="xs" style={styles.hourDetailIcon} />
-                    <span>{hour.wind.speed} m/s</span>
+                  <p className="text-lg font-bold text-gray-800">{hour.main.temp}°</p>
+                  <div className="flex flex-col space-y-1 mt-2 text-xs text-gray-600">
+                    <div className="flex items-center justify-center">
+                      <FontAwesomeIcon icon={faTint} className="text-green-500 mr-1" size="xs" />
+                      <span>{hour.main.humidity}%</span>
+                    </div>
+                    <div className="flex items-center justify-center">
+                      <FontAwesomeIcon icon={faWind} className="text-green-500 mr-1" size="xs" />
+                      <span>{hour.wind.speed} m/s</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -218,12 +247,13 @@ const Weather = () => {
         </div>
       )}
 
-      <div style={styles.farmingTips}>
-        <h3 style={styles.tipsTitle}>
-          <FontAwesomeIcon icon={faArrowRight} style={styles.tipIcon} />
+      {/* Farming Tips */}
+      <div className="bg-green-50 rounded-xl p-6 border-l-4 border-green-500">
+        <h3 className="flex items-center text-lg font-semibold text-green-800 mb-3">
+          <FontAwesomeIcon icon={faArrowRight} className="mr-2 text-green-600" />
           Farming Advisory
         </h3>
-        <p style={styles.tipText}>
+        <p className="text-gray-700">
           {getFarmingTip(forecast.length > 0 ? forecast[0].weather : '')}
         </p>
       </div>
@@ -231,253 +261,6 @@ const Weather = () => {
   );
 };
 
-const getFarmingTip = (weatherCondition) => {
-  const condition = weatherCondition.toLowerCase();
-  if (condition.includes("rain")) {
-    return "Ideal conditions for planting. Avoid applying fertilizers or pesticides as rain may wash them away. Good time for rice transplantation.";
-  }
-  if (condition.includes("clear")) {
-    return "Perfect weather for harvesting and drying crops. Irrigate fields in the early morning or late evening to reduce water loss through evaporation.";
-  }
-  if (condition.includes("cloud")) {
-    return "Good day for most farming activities. Moderate temperatures reduce stress on crops and livestock.";
-  }
-  if (condition.includes("thunder")) {
-    return "Postpone field work due to lightning risk. Secure farm equipment and protect sensitive crops. Check drainage systems.";
-  }
-  if (condition.includes("snow")) {
-    return "Protect winter crops with covers. Store harvested produce properly. Avoid working in fields during extreme cold.";
-  }
-  if (condition.includes("mist") || condition.includes("fog")) {
-    return "High humidity increases disease risk. Monitor crops for fungal infections. Delay spraying until visibility improves.";
-  }
-  return "Monitor weather regularly to plan farming activities. Check soil moisture before irrigation.";
-};
-
-const styles = {
-  container: {
-    maxWidth: "1000px",
-    margin: "0 auto",
-    padding: "20px",
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    backgroundColor: "#f8f9fa",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  },
-  header: {
-    textAlign: "center",
-    marginBottom: "30px",
-    paddingBottom: "20px",
-    borderBottom: "1px solid #e0e0e0",
-  },
-  title: {
-    color: "#2E8B57",
-    fontSize: "28px",
-    fontWeight: "600",
-    marginBottom: "5px",
-  },
-  subtitle: {
-    color: "#666",
-    fontSize: "16px",
-    marginTop: "0",
-  },
-  forecastContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-    gap: "15px",
-    marginBottom: "30px",
-  },
-  dayCard: {
-    flex: "1",
-    minWidth: "150px",
-    background: "#ffffff",
-    borderRadius: "8px",
-    padding: "15px",
-    textAlign: "center",
-    cursor: "pointer",
-    transition: "all 0.3s ease",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
-    border: "1px solid #e0e0e0",
-  },
-  selectedDayCard: {
-    background: "#e8f5e9",
-    border: "1px solid #2E8B57",
-    boxShadow: "0 4px 8px rgba(46, 139, 87, 0.2)",
-    transform: "translateY(-5px)",
-  },
-  dayTitle: {
-    color: "#333",
-    fontSize: "16px",
-    fontWeight: "500",
-    margin: "0 0 10px 0",
-  },
-  weatherImageContainer: {
-    height: "60px",
-    margin: "10px 0",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  weatherImage: {
-    height: "100%",
-    width: "auto",
-    objectFit: "contain",
-  },
-  tempContainer: {
-    margin: "10px 0",
-  },
-  maxTemp: {
-    fontSize: "20px",
-    fontWeight: "600",
-    color: "#e53935",
-  },
-  minTemp: {
-    fontSize: "16px",
-    color: "#1e88e5",
-  },
-  weatherDetails: {
-    display: "flex",
-    justifyContent: "space-around",
-    marginTop: "10px",
-  },
-  detailItem: {
-    display: "flex",
-    alignItems: "center",
-    gap: "5px",
-    fontSize: "12px",
-    color: "#666",
-  },
-  detailIcon: {
-    color: "#2E8B57",
-    fontSize: "14px",
-  },
-  hourlyContainer: {
-    background: "#ffffff",
-    borderRadius: "8px",
-    padding: "20px",
-    marginBottom: "30px",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
-    border: "1px solid #e0e0e0",
-  },
-  hourlyHeader: {
-    marginBottom: "15px",
-    textAlign: "center",
-  },
-  hourlyTitle: {
-    color: "#333",
-    fontSize: "18px",
-    fontWeight: "500",
-    margin: "0",
-  },
-  selectedDate: {
-    color: "#666",
-    fontSize: "14px",
-    margin: "5px 0 0 0",
-  },
-  hourlyForecast: {
-    display: "flex",
-    overflowX: "auto",
-    gap: "15px",
-    paddingBottom: "10px",
-  },
-  hourCard: {
-    minWidth: "80px",
-    background: "#f5f5f5",
-    borderRadius: "6px",
-    padding: "10px",
-    textAlign: "center",
-  },
-  hourTime: {
-    fontSize: "14px",
-    fontWeight: "500",
-    margin: "0 0 5px 0",
-  },
-  hourWeatherImage: {
-    height: "40px",
-    margin: "5px 0",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  weatherIcon: {
-    height: "100%",
-    width: "auto",
-  },
-  hourTemp: {
-    fontSize: "16px",
-    fontWeight: "600",
-    margin: "5px 0",
-    color: "#333",
-  },
-  hourDetails: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "3px",
-  },
-  hourDetailItem: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "3px",
-    fontSize: "11px",
-    color: "#666",
-  },
-  hourDetailIcon: {
-    color: "#2E8B57",
-  },
-  farmingTips: {
-    background: "#e8f5e9",
-    borderRadius: "8px",
-    padding: "15px",
-    borderLeft: "4px solid #2E8B57",
-  },
-  tipsTitle: {
-    color: "#2E8B57",
-    fontSize: "16px",
-    fontWeight: "600",
-    marginTop: "0",
-    marginBottom: "10px",
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-  },
-  tipIcon: {
-    fontSize: "14px",
-  },
-  tipText: {
-    color: "#333",
-    fontSize: "14px",
-    lineHeight: "1.5",
-    margin: "0",
-  },
-  loadingContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "200px",
-  },
-  loadingSpinner: {
-    border: "4px solid #f3f3f3",
-    borderTop: "4px solid #2E8B57",
-    borderRadius: "50%",
-    width: "40px",
-    height: "40px",
-    animation: "spin 1s linear infinite",
-    marginBottom: "15px",
-  },
-  errorContainer: {
-    background: "#ffebee",
-    padding: "20px",
-    borderRadius: "8px",
-    textAlign: "center",
-  },
-  errorText: {
-    color: "#c62828",
-    margin: "0",
-  },
-};
 export const getTodayWeather = async (lat, lon, apiKey) => {
   try {
     const response = await axios.get(
@@ -501,4 +284,5 @@ export const getTodayWeather = async (lat, lon, apiKey) => {
     return null;
   }
 };
+
 export default Weather;
